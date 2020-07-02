@@ -1,0 +1,6 @@
+FROM base
+WORKDIR /root
+COPY ./ spider_template/
+COPY ./docker_conf/web.conf /etc/supervisor/conf.d
+COPY ./docker_conf/web.sh .
+ENTRYPOINT ["./spider_template/docker_conf/web.sh"]

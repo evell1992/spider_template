@@ -1,0 +1,6 @@
+.idea/*
+spider_template/__pycache__/
+spider_template/utils/etl/__pycache__/
+spider_template/utils/__pycache__/
+template_control/utils/__pycache__/
+template_control/logs/

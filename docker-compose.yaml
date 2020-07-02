@@ -1,0 +1,78 @@
+#offline
+version: "3.0"
+
+services:
+  spider:
+    build:
+      context: .
+      dockerfile: SpiderDockerFile
+    image: "scrapy_spider:1.0"
+    container_name: scrapy_spider
+    environment:
+      - MONGO_URI=mongodb://192.168.124.21:27017
+
+      - REDIS_HOST=192.168.124.21
+      - REDIS_PORT=6379
+      - REDIS_DB=0
+      - REDIS_PWD=redis
+    restart: always
+
+  web:
+    build:
+      context: .
+      dockerfile: WebDockerFile
+    image: "web_api:1.0"
+    container_name: web_api
+    restart: always
+    ports:
+      - "80:12345"
+    environment:
+      - MONGO_URI=mongodb://192.168.124.21:27017
+      - REDIS_HOST=192.168.124.21
+      - REDIS_PORT=6379
+      - REDIS_DB=0
+      - REDIS_PWD=redis
+      - REDIS_KEY=spider_template:template_info
+
+## online
+#version: "3.0"
+#
+#services:
+#  spider:
+#    build:
+#      context: .
+#      dockerfile: SpiderDockerFile
+#    image: "scrapy_spider:1.0"
+#    container_name: scrapy_spider
+#    environment:
+#      - MONGO_URI=mongodb://newsspider:Wsnews2020@192.168.124.231:27017/spider_template
+#
+#      - REDIS_HOST=192.168.124.230
+#      - REDIS_PORT=6379
+#      - REDIS_DB=0
+#      - REDIS_PWD=Wsredis2020
+#
+#      - MQ_HOST=119.3.67.34
+#      - MQ_PORT=5672
+#      - MQ_VIRTUAL_HOST=/admin_host
+#      - MQ_USER=admin
+#      - MQ_PWD=admin
+#      - MQ_EXCHANGE=multiProvince
+#    restart: always
+#
+#  web:
+#    build:
+#      context: .
+#      dockerfile: WebDockerFile
+#    image: "web_api:1.0"
+#    container_name: web_api
+#    restart: always
+#    ports:
+#      - "8888:12345"
+#    environment:
+#      - MONGO_URI=mongodb://newsspider:Wsnews2020@192.168.124.231:27017/spider_template
+#      - REDIS_HOST=192.168.124.230
+#      - REDIS_PORT=6379
+#      - REDIS_DB=0
+#      - REDIS_PWD=Wsredis2020
+#      - REDIS_KEY=spider_template:template_info

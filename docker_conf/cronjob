@@ -1,0 +1,1 @@
+*/1 * * * * cd /root/spider_template && nohup python3 add_job_to_redis.py >> crontab.log 2>&1 &
